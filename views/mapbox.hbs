@@ -5,7 +5,61 @@
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
         <meta charset='utf-8' />
         <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<nav>
+    <!-- navbar content here  -->
+    <div class="nav-wrapper">
+        <a href="#" class="image">
+            <img src="/images/logo.png" style="width:150px;height:60px">
+        </a>
+    </div>
+</nav>
+
+<ul id="slide-out" class="sidenav">
+    <li>
+        <div class="user-view">
+
+            <a href="#name">
+                <span class="white-text name">John Doe</span>
+            </a>
+            <a href="#email">
+                <span class="white-text email">jdandturk@gmail.com</span>
+            </a>
+        </div>
+    </li>
+    <li>
+        <a href="#!">My Profile</a>
+    </li>
+    <li>
+        <a href="#!">Helplines</a>
+    </li>
+    <li>
+        <a href="#!">Auction</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <!-- <li><a class="subheader"></a></li> -->
+    <li>
+        <a class="waves-effect" href="#!">Sign Out</a>
+    </li>
+</ul>
+<a href="#" data-target="slide-out" class="sidenav-trigger">
+    <i class="material-icons">menu</i>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems);
+    });
+</script>
         <style>
             body {
                 margin: 0;
@@ -13,8 +67,9 @@
             }
         
             #map {
+                z-index: 10;
                 position: absolute;
-                top: 0;
+                top: 10%;
                 bottom: 0;
                 width: 100%;
             }
@@ -37,6 +92,11 @@
         });
 
     map.on('load', function () {
+
+        //var point_features = [];
+
+
+
         // Add a new source from our GeoJSON data and set the
         // 'cluster' option to true. GL-JS will add the point_count property to your source data.
         map.addSource("earthquakes", {
@@ -47,6 +107,7 @@
             cluster: true,
             clusterMaxZoom: 14, // Max zoom to cluster points on
             clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+            
         });
 
         map.addLayer({
@@ -87,7 +148,7 @@
             source: "earthquakes",
             filter: ["has", "point_count"],
             layout: {
-                "text-field": "{point_count_abbreviated}",
+                "text-field": "{point_count}",
                 "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
                 "text-size": 12
             }
@@ -108,23 +169,42 @@
 
         // inspect a cluster on click
         map.on('click', 'clusters', function (e) {
-            var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+            console.log(e);
+            var features = map.queryRenderedFeatures(e.point, {layers: ['clusters']});
             var clusterId = features[0].properties.cluster_id;
-            map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function (err, zoom) {
-                if (err)
-                    return;
+            var point_count = features[0].properties.point_count;
+            var feature_points = [];
 
-                map.easeTo({
-                    center: features[0].geometry.coordinates,
-                    zoom: zoom
+            map.getSource('earthquakes').getClusterLeaves(clusterId, point_count, 0, function (err, aFeatures) {
+                console.log('getClusterLeaves', aFeatures);
+                feature_points = aFeatures;
+            
+                console.log(features);
+                map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function (err, zoom) {
+                    if (err)
+                        return;
+
+                    map.easeTo({
+                        center: features[0].geometry.coordinates,
+                        zoom: zoom
+                    });
                 });
+
             });
         });
+
+        
 
         map.on('mouseenter', 'clusters', function () {
             map.getCanvas().style.cursor = 'pointer';
         });
         map.on('mouseleave', 'clusters', function () {
+            map.getCanvas().style.cursor = '';
+        });
+        map.on('mouseenter', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', function () {
             map.getCanvas().style.cursor = '';
         });
     });
