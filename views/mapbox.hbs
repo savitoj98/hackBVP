@@ -37,6 +37,9 @@
             .caret {
                 fill: white;
             }
+            .send:hover {
+                cursor: pointer;
+            }
         </style>
 
 
@@ -57,7 +60,7 @@
       <option value="4">Sanitation</option>
       <option value="5">Others</option>
     </select>
-    <i class="material-icons" style="color: white">send</i>
+    <i class="material-icons send" style="color: white; position:  absolute;top: -6px;right: -39px;">send</i>
   </div>
     </div>
 </nav>
@@ -101,25 +104,6 @@
     var instances = M.FormSelect.init(elems);
   });
 </script>
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-            }
-        
-            #map {
-                z-index: 10;
-                position: absolute;
-                top: 16%;
-                bottom: 0;
-                width: 100%;
-            }
-        </style>
-
-
-    </head>
-    <body>
-        <div id='map'></div>
     <script>
 
     
