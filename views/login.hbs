@@ -145,7 +145,7 @@
 			  data: {
 				  name: googleUser.getBasicProfile().getName(),
 				  email: googleUser.getBasicProfile().getEmail(),
-				  
+				  id: googleUser.getAuthResponse().id_token;
 			  }
 		  })
         }, function(error) {
