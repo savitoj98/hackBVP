@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="vie8wport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Umeed</title>
 
     <!--Materialize-->
     <!-- Compiled and minified CSS -->
@@ -48,56 +48,47 @@
             <div class="col s8">
                 <ul class="collection">
                     <li class="collection-item avatar">
-                        <img src="https://www.wwe.com/f/styles/og_image/public/rd-talent/Bio/Brock_Lesnar_bio.png" alt="" class="circle">
+                        <img id="agent-image"  alt="" class="circle">
                         <span class="title" style="color:green">
                             <strong>PHILANTHROPY AGENT</strong>
                         </span>
-                        <p>Brock Edward Lesnar
-                            <br>Former-UFC and WWE-Universal Champion
+                        <div>
+                            <strong id="agent-name"></strong>
+                            <br>
+                            <span id="agent-description"></span>
                             <br>
                             <strong>Public Ethereum Account: </strong>
-                            <span>0x287cfb49cebac74dd0b28fa8de3a4d0ecc8d3a7c</span>
+                            <span id="agent-address"></span>
                             <br>
                             <strong>Relief Donation(ETH): </strong>
-                            <span>5.0</span>
-                        </p>
+                            <span id="agent-relief-donation">0.0</span>
+                        </div>
                     </li>
                     <li class="collection-item avatar">
                         <img src="https://pbs.twimg.com/profile_images/864950151852548097/1u5nYIe1_400x400.jpg" alt="" class="circle">
                         <span class="title" style="color:red">
                             <strong>NON-PROFIT DISTRIBUTOR</strong>
                         </span>
-                        <p><strong>Ummed Relief and Rehab</strong> 
+                        <div>
+                            <strong id="distributor-name">Ummed Relief and Rehab</strong>
                             <br>
                             <strong>Public Ethereum Account: </strong>
-                            <span>0x287cfb49cebac74dd0b28fa8de3a4d0ecc8d3a7c</span>
+                            <span id="distributor-acc">0x287cfb49cebac74dd0b28fa8de3a4d0ecc8d3a7c</span>
                             <br>
                             <strong>Donations Recieved(ETH): </strong>
-                            <span id="funds-received">0.0</span>
+                            <span id="distributor-funds-received">0.0</span>
                             <br>
                             <strong>Donations Spread(ETH): </strong>
-                            <span id="funds-spread">0.0</span>
+                            <span id="distributor-funds-spread">0.0</span>
                         </p>
                     </li>
                     <li class="collection-item avatar">
                         <span class="title" style="color:blue">
                             <strong>GRASSROOT LEVEL USERS</strong>
                         </span>
-                        <ol id="end-user-ol">
-                            <!-- <li>
-                                <img id="food-img" src="https://www.wwe.com/f/styles/og_image/public/rd-talent/Bio/Brock_Lesnar_bio.png" alt="" class="circle">
-                                <span>
-                                    <strong>Needy Kitchen</strong>
-                                </span>
-                                <br>
-                                <p>Local Food Supplier in Packaged or Ready to Eat Products</p>
-                                <strong>Public Ethereum Account: </strong>
-                                <span>0x287cfb49cebac74dd0b28fa8de3a4d0ecc8d3a7c</span>
-                                <br>
-                                <strong>Funds Recieved(ETH): </strong>
-                                <span>2.0</span>
-                            </li> -->
-                        </ol>
+                        <ul id="end-user-ol">
+                
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -122,6 +113,12 @@
                 <div class="card" id="distribute-div">
 
                     <div class="card-title" style="margin-left: 10px">Distribute Funds </div>
+                    <div>
+                        <span style="margin-left: 10px">
+                            <strong>Recieved Funds: </strong>
+                        </span>
+                        <span id="received-fund-span"></span>
+                    </div>
                     <div class="card-content">
                         <button class="waves-effect waves-light btn" id="relief-distribute-button">Distribute</button>
                     </div>
@@ -137,7 +134,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <!-- <script src="js/bootstrap.min.js"></script> -->
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/fund_chain.js"></script>

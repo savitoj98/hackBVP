@@ -11,7 +11,7 @@ var mapboxRouter = require('./routes/mapbox');
 
 var usersRouter = require('./routes/login');
 var auctionRouter = require('./routes/auction');
-
+var fundRouter = require('./routes/fund')
 var app = express();
 
 // view engine setup
@@ -33,7 +33,7 @@ app.use('/login', usersRouter);
 
 app.use('/auction', auctionRouter);
 
-
+app.use('/fund_chain', fundRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
