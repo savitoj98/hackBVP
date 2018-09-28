@@ -37,6 +37,9 @@
             .caret {
                 fill: white;
             }
+            .send:hover {
+                cursor: pointer;
+            }
         </style>
 
 
@@ -57,7 +60,7 @@
       <option value="4">Sanitation</option>
       <option value="5">Others</option>
     </select>
-    <i class="material-icons" style="color: white">send</i>
+    <i class="material-icons send" style="color: white; position:  absolute;top: -6px;right: -39px;">send</i>
   </div>
     </div>
 </nav>
@@ -101,43 +104,65 @@
     var instances = M.FormSelect.init(elems);
   });
 </script>
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-            }
-        
-            #map {
-                z-index: 100;
-                position: absolute;
-                top: 16%;
-                bottom: 0;
-                width: 100%;
-            }
-        </style>
-
-
-    </head>
-    <body>
-        <div id='map'></div>
     <script>
 
     
 
 
     function map2(){
+
+        var foodsJson = decodeURIComponent("{{{foods}}}");
+        var watersJson = decodeURIComponent("{{{waters}}}");
+        var othersJson = decodeURIComponent("{{{others}}}");
+        var satsJson = decodeURIComponent("{{{sats}}}");
+        var medsJson = decodeURIComponent("{{{meds}}}");
+
+        var foodsObj = JSON.parse(foodsJson);
+        var watersObj = JSON.parse(watersJson);
+        var othersObj = JSON.parse(othersJson);
+        var satsObj = JSON.parse(satsJson);
+        var medsObj = JSON.parse(medsJson);
+    
+
         mapboxgl.accessToken = 'pk.eyJ1IjoiZmVyaWRhdGkiLCJhIjoiY2ptbG14MTM3MDk3cDNrcGJuaHpxZTZkaCJ9.lpmarhUWUsyIxyxm6Q9C1g';
             var map = new mapboxgl.Map({
                 container: 'map', // container id
                 style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
                 center: [77.3839, 27.0616], // starting position [lng, lat]
-                zoom: 5// starting zoom
+                zoom: 6// starting zoom
         });
 
         map.on('load',function(){
 
-            var arr = [[-122.447303, 37.753574],[-123.447303, 34.753574],[-123.447303, 36.753574]];
-            const allPoints = arr.map(point => ({
+            const allPointsFood = foodsObj.map(point => ({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: point
+                }
+            }));
+            const allPointsWater = watersObj.map(point => ({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: point
+                }
+            }));
+            const allPointsOther = othersObj.map(point => ({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: point
+                }
+            }));
+            const allPointsSat = satsObj.map(point => ({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: point
+                }
+            }));
+            const allPointsMed = medsObj.map(point => ({
                 type: 'Feature',
                 geometry: {
                     type: 'Point',
@@ -146,13 +171,13 @@
             }));
 
             map.addLayer({
-                id: 'path',
+                id: 'food',
                 type: 'circle',
                 source: {
                     type: 'geojson',
                     data: {
                         type: 'FeatureCollection',
-                        features: allPoints
+                        features: allPointsFood
                     }
                 },
                 paint:{
@@ -162,6 +187,82 @@
                     },
                     'circle-color': '#fbb03b'
                     
+                }
+            });
+            map.addLayer({
+                id: 'med',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: allPointsMed
+                    }
+                },
+                paint: {
+                    'circle-radius': {
+                        'base': 1.75,
+                        'stops': [[12, 2], [22, 180]]
+                    },
+                    'circle-color': '#223b53'
+
+                }
+            });
+            map.addLayer({
+                id: 'sat',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: allPointsSat
+                    }
+                },
+                paint: {
+                    'circle-radius': {
+                        'base': 1.75,
+                        'stops': [[12, 2], [22, 180]]
+                    },
+                    'circle-color': '#e55e5e'
+
+                }
+            });
+            map.addLayer({
+                id: 'water',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: allPointsWater
+                    }
+                },
+                paint: {
+                    'circle-radius': {
+                        'base': 1.75,
+                        'stops': [[12, 2], [22, 180]]
+                    },
+                    'circle-color': '#3bb2d0'
+
+                }
+            });
+            map.addLayer({
+                id: 'other',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: allPointsOther
+                    }
+                },
+                paint: {
+                    'circle-radius': {
+                        'base': 1.75,
+                        'stops': [[12, 2], [22, 180]]
+                    },
+                    'circle-color': '#ccc'
+
                 }
             });
 
@@ -358,7 +459,7 @@
         });
     });
     }
-    map1();
+    map2();
     </script>
 
     </body>

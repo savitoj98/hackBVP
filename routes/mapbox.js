@@ -1,13 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var {dummy} = require('./../db/dummy.js');
+var fs = require('fs');
+var obj_data = require('./data.json')
 /* GET home page. */
 var final_obj;
 
 router.get('/', function (req, res, next) {
-
-
     
+
+    // console.log(obj_data.cluster.length);
+    var food = [];
+    var water = [];
+    var other = [];
+    var sat = [];
+    var med = [];
+
+    for(var i=0;i<obj_data.cluster.length;i++){
+        var coords = [obj_data.long[i], obj_data.lat[i]];
+        if(obj_data.cluster[i] == 0) other.push(coords);
+        if(obj_data.cluster[i] == 1) water.push(coords);
+        if(obj_data.cluster[i] == 2) sat.push(coords);
+        if(obj_data.cluster[i] == 3) med.push(coords);
+        if(obj_data.cluster[i] == 4) food.push(coords);
+    }
 
 
 
@@ -51,12 +67,16 @@ router.get('/', function (req, res, next) {
                 features: features_data
             }
 
-            var { spawn } = require("child_process");
 
-            var process = spawn('python3', ["./clustering.py"]);
+            res.render('mapbox', {
+                encoded: encodeURIComponent(JSON.stringify(final_obj)), 
+                foods: encodeURIComponent(JSON.stringify(food)),
+                waters: encodeURIComponent(JSON.stringify(water)),
+                sats: encodeURIComponent(JSON.stringify(sat)),
+                meds: encodeURIComponent(JSON.stringify(med)),
+                others: encodeURIComponent(JSON.stringify(other))
 
-            
-            res.render('mapbox', {encoded: encodeURIComponent(JSON.stringify(final_obj))});
+            });
 
         }
 
