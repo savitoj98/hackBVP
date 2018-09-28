@@ -5,6 +5,12 @@ var {dummy} = require('./../db/dummy.js');
 var final_obj;
 
 router.get('/', function (req, res, next) {
+
+
+    
+
+
+
     var features_data = [];
     var flag = 0;
     for(var i=0;i<dummy.length;i++){
@@ -45,7 +51,11 @@ router.get('/', function (req, res, next) {
                 features: features_data
             }
 
+            var { spawn } = require("child_process");
 
+            var process = spawn('python3', ["./clustering.py"]);
+
+            
             res.render('mapbox', {encoded: encodeURIComponent(JSON.stringify(final_obj))});
 
         }
