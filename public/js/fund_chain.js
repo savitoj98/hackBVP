@@ -26,7 +26,7 @@ App = {
   },
 
   initContract: function () {
-    $.getJSON('FundChain.json', function (fundChain) {
+    $.getJSON('../build/contracts/FundChain.json', function (fundChain) {
       // Instantiate a new truffle contract from the artifact
       App.contracts.FundChain = TruffleContract(fundChain);
       // Connect provider to interact with contract
