@@ -26,7 +26,7 @@ App = {
   },
 
   initContract: function () {
-    $.getJSON('../build/contracts/FundChain.json', function (fundChain) {
+    $.getJSON('FundChain.json', function (fundChain) {
       // Instantiate a new truffle contract from the artifact
       App.contracts.FundChain = TruffleContract(fundChain);
       // Connect provider to interact with contract
@@ -126,11 +126,11 @@ App = {
         if (donationAmt) {
           //web3.eth.getAccounts().then(account=> {
           //console.log(account[0]);
-          donationAmt=parseFloat(donationAmt)*Math.pow(10,18);
+          console.log(donationAmt)
           web3.eth.sendTransaction({
             from: currentAccount,
             to: '0xc31a645997a9617f96667EaE0561A340bC95e7B9',
-            value:donationAmt ,
+            value: parseFloat(donationAmt),
           }, function (err,result) {
             console.log(result)
             console.log(err);

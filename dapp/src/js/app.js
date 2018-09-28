@@ -23,7 +23,7 @@ App = {
 
   initContract: function () {
     //../build/contracts/Auction.json
-    $.getJSON('../build/contracts/Auction.json', function (auction) {
+    $.getJSON('Auction.json', function (auction) {
       // Instantiate a new truffle contract from the artifact
       App.contracts.Auction = TruffleContract(auction);
       // Connect provider to interact with contract
@@ -127,7 +127,7 @@ App = {
         console.log('clicked');
         let bidValue = document.getElementById('bid-input').value;
         if (bidValue) {
-          bidValue=parseFloat(bidValue)*Math.pow(10,18);
+
           auctionInstance.bid({
             from: currentAccount,
             to: '0x56C10FC821263340f0DfAaD42BE565F34e85F537',
