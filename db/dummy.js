@@ -1,4 +1,4 @@
-
+var dummy = [
     {
       "name": "Duffy Pollard",
       "email": "duffypollard@enomen.com",
@@ -21343,3 +21343,6 @@
           ],
           "id": 82495547143034900000
         }
+  ]
+
+  module.exports.dummy = dummy;
