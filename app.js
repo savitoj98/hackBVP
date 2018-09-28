@@ -10,7 +10,7 @@ var indexRouter = require('./routes/index');
 var mapboxRouter = require('./routes/mapbox');
 
 var usersRouter = require('./routes/login');
-
+var auctionRouter = require('./routes/auction');
 
 var app = express();
 
@@ -30,6 +30,8 @@ app.use('/', indexRouter);
 app.use('/mapbox', mapboxRouter);
 
 app.use('/login', usersRouter);
+
+app.use('/auction', auctionRouter);
 
 
 // catch 404 and forward to error handler
