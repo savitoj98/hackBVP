@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Auction-Dapp</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-push-2">
+        <h1 class="text-center">Relief Fund Auction</h1>
+        <hr/>
+        <br/>
+      </div>
+    </div>
+
+    <div id="loadingRow" class="row" style="text-align: center">
+      <h2>
+        <em>Loading...</em>
+      </h2>
+    </div>
+
+    <div id="content">
+
+      <div id="auctionRow" class="row">
+
+        <h1 class="text-center">Auction #613</h1>
+        <hr/>
+        <div id="auctionerDiv" class="col-sm-3" style="background:whitesmoke; padding: 10px">
+          <h4>
+            <strong>Auctioner:</strong>
+          </h4>
+          <img id="auctioner-image" class="img-circle rounded" style="width: 40%">
+          <div id="auctioner-name"></div>
+          <div id="auctioner-description"></div>
+          <!-- <h4>
+            <strong>Beneficiary:</strong>
+          </h4>
+          <img id="beneficiary-image" class="rounded" style="width: 60%">
+          <div id="beneficiary-name"></div>
+          <div>
+            <strong>To Donate:</strong>
+          </div>
+          <div>
+            <a id="beneficiary-link"></a>
+          </div> -->
+
+        </div>
+
+        <div id="auctionItemDiv" class="col-sm-6">
+          <h1 class="text-center">
+            <strong id="item-name"></strong>
+            </h5>
+            <img id="item-image" class="rounded" style="width: 95%;">
+            <h5>
+              <strong>Catalog</strong>
+              </h6>
+              <p id="item-catalog"></p>
+              <p>Please bid to the best of your resources, to help the people who are unfortunately suffering due to difficult circumstances. Your contributions
+                will be appreciated and acknowledged.</p>
+        </div>
+
+        <div id="bidderDiv" class="col-sm-3" style="background:whitesmoke; padding: 10px">
+          <h4>
+            <strong>Highest Bidder:</strong>
+          </h4>
+          <img src="https://pbs.twimg.com/profile_images/626149701189042177/LWpxKEv3_400x400.png" class="img-circle rounded" style="width: 40%">
+          <h5>
+            <strong id="highest-bid"></strong>
+          </h5>
+          <div id="highest-bidder"></div>
+        </div>
+      </div>
+
+      <div id="bidRow" class="row text-center" style="margin-bottom: 10%">
+        <h3>Place your bid...</h3>
+
+        <div style="text-align: left">
+          <span><strong>Your Account: </strong></span>
+          <span id="account-span"></span>
+        </div>
+
+        <div style="text-align: left">
+          <span><strong>Balance (ETH): </strong> </span>
+          <span id="balance-span"></span>
+        </div>
+
+        <div class="col-sm-12">
+          <label for="bid-input">Bids are placed in WIE (wie)</label>
+          <input type="number" id="bid-input" class="form-control text-center" placeholder="0.0">
+          <button id="bid-submit-button" type="button" class="btn btn-primary" style="margin: 1%">Submit Bid</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
