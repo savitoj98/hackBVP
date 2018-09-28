@@ -32,6 +32,17 @@ var users = mongoose.model('Users',{
         minlength: 1,
         required: true,
         unique: true
+    },
+    coordinate: {
+        lat: {
+            type: Number
+        },
+        long: {
+            type:Number
+        },
+    },
+    problems: {
+        type: Array
     }
 });
 
