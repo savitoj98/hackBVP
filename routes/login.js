@@ -15,6 +15,7 @@ router.post('/authenticate', function(req,res,next) {
       email: req.body.email
     });
     user.save().then((doc) => {
+      console.log("post received")
       res.status(200).send("login success");
     }).catch(e => {
       console.log(e);

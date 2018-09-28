@@ -139,13 +139,20 @@
     console.log(element.id);
     auth2.attachClickHandler(element, {},
         function(googleUser) {
+			console.log("authenticated");
           $.ajax({
 			  url: 'http://localhost:3000/login/authenticate',
 			  type: 'POST',
 			  data: {
 				  name: googleUser.getBasicProfile().getName(),
 				  email: googleUser.getBasicProfile().getEmail(),
-				  id: googleUser.getAuthResponse().id_token;
+				  id: googleUser.getAuthResponse().id_token
+			  },
+			  success: function(data) {
+				  alert("login success")
+			  },
+			  error: function(e) {
+				  alert("login failed")
 			  }
 		  })
         }, function(error) {
