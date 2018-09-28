@@ -126,11 +126,11 @@ App = {
         if (donationAmt) {
           //web3.eth.getAccounts().then(account=> {
           //console.log(account[0]);
-          console.log(donationAmt)
+          donationAmt=parseFloat(donationAmt)*Math.pow(10,18);
           web3.eth.sendTransaction({
             from: currentAccount,
             to: '0xc31a645997a9617f96667EaE0561A340bC95e7B9',
-            value: parseFloat(donationAmt),
+            value:donationAmt ,
           }, function (err,result) {
             console.log(result)
             console.log(err);

@@ -14,7 +14,7 @@ for usr in data:
 # print(i)
 # print(usr_prob)
 
-print(data)
+# print(data)
 
 
 # usr_data = np.array(usr_prob)
@@ -22,38 +22,38 @@ print(data)
 x, y = kmeans2(whiten(usr_prob), 5, iter = 20)
 
 # y.dtype = np.int64
-# print(type(y))
+print(type(y))
+y = y.tolist()
 # print(x)
-print(y)
+print(y[0])
 print(len(y))
 #
 # # print(data["coordinates"]["lat"])
 #
 j = 0
-lat = np.ndarray((1334,1))
-long = np.ndarray((1334,1))
 
 locn_cluster = {"lat" : [],
             "long" : [],
             "cluster" : []}
-print(len(y))
+# print(len(y))
 
 for usr in data:
     locn = usr["coordinate"]
     # print(locn)
     locn_cluster["lat"].append(locn["lat"])
     locn_cluster["long"].append(locn["long"])
+    
     locn_cluster["cluster"].append(y[j])
-    # print()
     j += 1
+    
 #
 #
-# print(locn_cluster)
+print(locn_cluster)
 #
-print(len(locn_cluster["lat"]))
-print(len(locn_cluster["long"]))
-print(len(locn_cluster["cluster"]))
-#
+# print(len(locn_cluster["lat"]))
+# print(len(locn_cluster["long"]))
+# print(len(locn_cluster["cluster"]))
+# #
 #
 # # print(lat)
 #
@@ -70,9 +70,9 @@ print(len(locn_cluster["cluster"]))
 # f.write(json)
 # f.close()
 
-# with open("data.json", "w") as outfile:
-#     json.dump(locn_cluster, outfile)
-# # r = json.dumps(locn_cluster)
+with open("data.json", "w") as outfile:
+    json.dump(locn_cluster, outfile)
+# r = json.dumps(locn_cluster)
 
 
 

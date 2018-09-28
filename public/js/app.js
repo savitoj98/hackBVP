@@ -127,7 +127,7 @@ App = {
         console.log('clicked');
         let bidValue = document.getElementById('bid-input').value;
         if (bidValue) {
-
+          bidValue=parseFloat(bidValue)*Math.pow(10,18);
           auctionInstance.bid({
             from: currentAccount,
             to: '0x56C10FC821263340f0DfAaD42BE565F34e85F537',
