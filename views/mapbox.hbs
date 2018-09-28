@@ -100,9 +100,79 @@
     var instances = M.FormSelect.init(elems);
   });
 </script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+        
+            #map {
+                z-index: 10;
+                position: absolute;
+                top: 10%;
+                bottom: 0;
+                width: 100%;
+            }
+        </style>
+
+
+    </head>
+    <body>
+        <div id='map'></div>
     <script>
 
+    
 
+
+    function map2(){
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZmVyaWRhdGkiLCJhIjoiY2ptbG14MTM3MDk3cDNrcGJuaHpxZTZkaCJ9.lpmarhUWUsyIxyxm6Q9C1g';
+            var map = new mapboxgl.Map({
+                container: 'map', // container id
+                style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
+                center: [77.3839, 27.0616], // starting position [lng, lat]
+                zoom: 5// starting zoom
+        });
+
+        map.on('load',function(){
+
+            var arr = [[-122.447303, 37.753574],[-123.447303, 34.753574],[-123.447303, 36.753574]];
+            const allPoints = arr.map(point => ({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: point
+                }
+            }));
+
+            map.addLayer({
+                id: 'path',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: allPoints
+                    }
+                },
+                paint:{
+                    'circle-radius': {
+                        'base': 1.75,
+                        'stops': [[12, 2], [22, 180]]
+                    },
+                    'circle-color': '#fbb03b'
+                    
+                }
+            });
+
+
+
+        });
+
+    }
+
+//Just for some time
+
+    function map1(){
         var decodedJson = decodeURIComponent("{{{encoded}}}");
         //var jsonObj = JSON.parse(decodedJson);
         //console.log(decodedJson);  
@@ -123,7 +193,11 @@
     map.on('load', function () {
 
         //var point_features = [];
-
+        var url = 'http://localhost:3000/map/geojson';
+        window.setInterval(function(){
+            //console.log("new d");
+            map.getSource("earthquakes").setData(url);
+        }, 5000);
         
 
         // Add a new source from our GeoJSON data and set the
@@ -132,7 +206,7 @@
             type: "geojson",
             // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
             // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-            data: 'http://localhost:3000/map/geojson',
+            data: url,
             cluster: true,
             clusterMaxZoom: 14, // Max zoom to cluster points on
             clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -282,6 +356,7 @@
             map.getCanvas().style.cursor = '';
         });
     });
+    }
     </script>
 
     </body>

@@ -75,4 +75,3 @@ with open("data.json", "w") as outfile:
 # r = json.dumps(locn_cluster)
 
 
-

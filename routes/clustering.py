@@ -70,9 +70,9 @@ print(len(locn_cluster["cluster"]))
 # f.write(json)
 # f.close()
 
-with open("data.json", "w") as outfile:
-    json.dump(locn_cluster, outfile)
-# r = json.dumps(locn_cluster)
+# with open("data.json", "w") as outfile:
+#     json.dump(locn_cluster, outfile)
+# # r = json.dumps(locn_cluster)
 
 
 
