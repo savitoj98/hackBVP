@@ -83,19 +83,30 @@
 
 
     <script>
+
+
+        var decodedJson = decodeURIComponent("{{{encoded}}}");
+        //var jsonObj = JSON.parse(decodedJson);
+        //console.log(decodedJson);  
+          
         mapboxgl.accessToken = 'pk.eyJ1IjoiZmVyaWRhdGkiLCJhIjoiY2ptbG14MTM3MDk3cDNrcGJuaHpxZTZkaCJ9.lpmarhUWUsyIxyxm6Q9C1g';
         var map = new mapboxgl.Map({
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
-            center:  [-103.59179687498357, 40.66995747013945], // starting position [lng, lat]
-            zoom: 3 // starting zoom
+            center:  [77.3839, 27.0616], // starting position [lng, lat]
+            zoom:  5// starting zoom
         });
+
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
 
     map.on('load', function () {
 
         //var point_features = [];
 
-
+        
 
         // Add a new source from our GeoJSON data and set the
         // 'cluster' option to true. GL-JS will add the point_count property to your source data.
@@ -103,7 +114,7 @@
             type: "geojson",
             // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
             // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-            data: "./earthquakes.geojson",
+            data: 'http://localhost:3000/mapbox/geojson',
             cluster: true,
             clusterMaxZoom: 14, // Max zoom to cluster points on
             clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -170,16 +181,18 @@
         // inspect a cluster on click
         map.on('click', 'clusters', function (e) {
             console.log(e);
+            var feature_points; 
+            
             var features = map.queryRenderedFeatures(e.point, {layers: ['clusters']});
             var clusterId = features[0].properties.cluster_id;
             var point_count = features[0].properties.point_count;
-            var feature_points = [];
+            
 
             map.getSource('earthquakes').getClusterLeaves(clusterId, point_count, 0, function (err, aFeatures) {
                 console.log('getClusterLeaves', aFeatures);
                 feature_points = aFeatures;
             
-                console.log(features);
+                //console.log(features);
                 map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function (err, zoom) {
                     if (err)
                         return;
@@ -190,17 +203,60 @@
                     });
                 });
 
+
             });
         });
 
         
 
-        map.on('mouseenter', 'clusters', function () {
+        map.on('mouseenter', 'clusters', function (e) {
             map.getCanvas().style.cursor = 'pointer';
+            var feature_points;
+
+            var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+            var clusterId = features[0].properties.cluster_id;
+            var point_count = features[0].properties.point_count;
+
+
+            map.getSource('earthquakes').getClusterLeaves(clusterId, point_count, 0, function (err, aFeatures) {
+                //console.log('getClusterLeaves', aFeatures);
+                feature_points = aFeatures;
+
+            
+                var probsum = [];
+                probsum = [0,0,0,0,0];
+                var max = 0;
+                var maxi = 0;
+                for (var i = 0; i < feature_points.length; i++) {
+                    for(var j=0;j<5;j++){
+                        probsum[j] += feature_points[i].properties.problems[j];
+                        if(max < probsum[j]){
+                            max = probsum[j];
+                            maxi = j;
+                        }
+                    }
+                }
+
+                var probs = ["Others", "Water", "Sanitation", "Medicine", "Food"];
+
+
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+                var description = "<strong>Cluster Details:</strong><p>Major Problem: " + probs[maxi] + " </p>";
+                popup.setLngLat(coordinates)
+                    .setHTML(description)
+                    .addTo(map);
+                });
         });
+
+
         map.on('mouseleave', 'clusters', function () {
             map.getCanvas().style.cursor = '';
+            popup.remove();
         });
+        
         map.on('mouseenter', function () {
             map.getCanvas().style.cursor = 'pointer';
         });
