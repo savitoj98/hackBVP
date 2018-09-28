@@ -53,12 +53,12 @@
         </a>
     <div class="input-field col s12 m6" style="position:absolute;top: 40px;left: 28%;width: 50%;">
     <select multiple>
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Food</option>
-      <option value="2">Water</option>
+      <option value="" disabled>Choose your option</option>
+      <option value="4">Food</option>
+      <option value="1">Water</option>
       <option value="3">Medicine</option>
-      <option value="4">Sanitation</option>
-      <option value="5">Others</option>
+      <option value="2">Sanitation</option>
+      <option value="0">Others</option>
     </select>
     <i class="material-icons send" style="color: white; position:  absolute;top: -6px;right: -39px;">send</i>
   </div>
@@ -106,8 +106,36 @@
 </script>
     <script>
 
-    
-
+    $('.send').on('click', function(e) {
+        var elem = document.querySelector('select');
+        var instance = M.FormSelect.getInstance(elem);
+        var values = instance.getSelectedValues();
+        if(values.length <=0) {
+            alert("select atleast one problem");
+        }
+        else {
+            var prob = Array.from(Array(5), () => 0)
+            for(var i = 0; i < values.length ; i++ ) {
+                prob[Number(values[i])] = 1;
+            }
+            console.log(prob);
+            var lat;
+            var long;
+            navigator.geolocation.getCurrentPosition(function(position) {
+             lat = position.coords.latitude;
+             long =  position.coords.longitude; 
+            $.ajax({
+                url: 'http://localhost:3000/map/addProblem',
+                method: 'POST',
+                data: {
+                    lat: lat,
+                    long: long,
+                    problems: prob
+                }
+            })
+            });
+        }
+    })    
 
     function map2(){
         mapboxgl.accessToken = 'pk.eyJ1IjoiZmVyaWRhdGkiLCJhIjoiY2ptbG14MTM3MDk3cDNrcGJuaHpxZTZkaCJ9.lpmarhUWUsyIxyxm6Q9C1g';
@@ -182,7 +210,7 @@
         window.setInterval(function(){
             //console.log("new d");
             map.getSource("earthquakes").setData(url);
-        }, 5000);
+        }, 15000);
         
 
         // Add a new source from our GeoJSON data and set the
