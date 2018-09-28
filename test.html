@@ -1,0 +1,64 @@
+
+
+
+<!Doctype html>
+<html>
+
+
+<input type="button" name="answer" value="Show Div" onclick="showDiv()" />
+
+
+<div id="welcomeDiv"  style="display:none;" class="answer_list" > WELCOME</div>
+
+
+
+<!--chat-div-->
+<div class="mdc-layout-grid mdc-elevation--z16" id="chat-div">
+ 
+    <span class="mdc-layout-grid__inner chat-div-header">
+        <span>
+            <img class="chat-header-icon" src="logo.jpg">
+        </span>
+        <span class="chat-div-header-text mdc-layout-grid__cell--span-9">Bot Chaeufferurio</span>
+        <button id="chat-div-close-button" class="mdc-icon-button material-icons">close</button>
+    </span>
+ 
+    <div class="mdc-layout-grid__inner" id="chat-list-div">
+ 
+        <ul id="chat-list" class="mdc-layout-grid__cell--span-12">
+        </ul>
+    </div>
+ 
+    <div class="mdc-layout-grid__inner chat-input-div">
+        <div class="text-field-container mdc-layout-grid__cell--span-12">
+            <div class="mdc-text-field text-field mdc-text-field--box mdc-text-field--with-trailing-icon mdc-text-field--upgraded mdc-ripple-upgraded mdc-text-field--fullwidth"
+                 style="--mdc-ripple-fg-size:147.24px; --mdc-ripple-fg-scale:1.77743; --mdc-ripple-fg-translate-start:50.38px, -46.045px; --mdc-ripple-fg-translate-end:49.08px, -45.62px;">
+                <input type="text" id="chat-input" class="mdc-text-field__input" placeholder="Ask something...">
+                <i class="material-icons mdc-text-field__icon">send</i>
+                <div class="mdc-line-ripple" style="transform-origin: 124px center 0;"></div>
+            </div>
+        </div>
+    </div>
+ 
+</div>
+		// your code goes here
+	}
+}
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	function showDiv() {
+   document.getElementById('chat-div').style.display = "";
+}
+</script>
+
+</body>
+</html>
