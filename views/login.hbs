@@ -149,7 +149,7 @@
 				  id: googleUser.getAuthResponse().id_token
 			  },
 			  success: function(data) {
-				  alert("login success")
+				  window.location.replace("http://localhost:3000/map")
 			  },
 			  error: function(e) {
 				  alert("login failed")
