@@ -88,7 +88,7 @@
 </a>
 <div class="fixed-action-btn">
   <a class="btn-floating btn-large red">
-    <i class="large material-icons">mode_edit</i>
+    <i class="large material-icons">swap_horiz</i>
   </a>
 </div>
 
@@ -110,6 +110,18 @@
   });
 </script>
     <script>
+        var map1Toggle = true;
+    $('.btn-floating').on('click', function(e){
+        if(map1Toggle) {
+            map2();
+            map1Toggle = false;
+        } else {
+            console.log("A")
+            map1();
+            map1Toggle = true;
+        }
+        
+    })    
 
     $('.send').on('click', function(e) {
         var elem = document.querySelector('select');
@@ -136,6 +148,9 @@
                     lat: lat,
                     long: long,
                     problems: prob
+                },
+                success: function(data) {
+                    alert("Thank You For Sharing Your Grievances.")
                 }
             })
             });
@@ -164,6 +179,12 @@
                 center: [77.3839, 27.0616], // starting position [lng, lat]
                 zoom: 6// starting zoom
         });
+        map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: false
+    },
+    trackUserLocation: true
+}))
 
         map.on('load',function(){
 
@@ -261,7 +282,7 @@
                 }
             });
             map.addLayer({
-                id: 'water',
+                id: 'water22',
                 type: 'circle',
                 source: {
                     type: 'geojson',
@@ -319,6 +340,12 @@
             center:  [77.3839, 27.0616], // starting position [lng, lat]
             zoom:  5// starting zoom
         });
+        map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: false
+    },
+    trackUserLocation: true
+}))
 
     var popup = new mapboxgl.Popup({
         closeButton: false,
@@ -332,7 +359,7 @@
         window.setInterval(function(){
             //console.log("new d");
             map.getSource("earthquakes").setData(url);
-        }, 15000);
+        }, 5000);
         
 
         // Add a new source from our GeoJSON data and set the
@@ -461,9 +488,11 @@
                             max = probsum[j];
                             maxi = j;
                         }
+                        
                     }
-                }
 
+                }
+               
                 var probs = ["Others", "Water", "Sanitation", "Medicine", "Food"];
 
 
@@ -471,7 +500,7 @@
                 while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
-                var description = "<strong>Cluster Details:</strong><p>Major Problem: " + probs[maxi] + " </p>";
+                var description = "<b>Cluster Details:</b><p>Major Problem: " + probs[maxi] + " </p>";
                 popup.setLngLat(coordinates)
                     .setHTML(description)
                     .addTo(map);
@@ -492,7 +521,7 @@
         });
     });
     }
-    map2();
+    map1();
     </script>
 
     </body>
